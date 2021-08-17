@@ -7,43 +7,41 @@ import {
   Image,
   Badge,
   Button,
+  Container,
 } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { MDXRemote } from 'next-mdx-remote'
 
 import AppLayout from '@/layouts/AppLayout';
-import { readAllPostSlugs, readAllTags, readPostBySlug } from '@/libs/mdx';
+import { readAllPostSlugs, readPostBySlug } from '@/libs/mdx';
 import Tags from '@/src/components/Tags';
 import { ROUTE_PATHS } from '@/src/constants/routePaths';
-import BlogPageContainer from '@/src/components/BlogPageContainer';
 import { MDXComponents } from '@/config/mdx';
 import useCustomTheme from '@/src/hooks/useCustomTheme';
 import { ROOT_WEB } from '@/src/constants/app';
 import { CONTENT_TYPE } from '@/src/constants/enum';
 
-const BlogPage = (props) => {
-  const { blog, tags, slug } = props;
-  const blogTags = blog.tags.map(t => ({ name: t }));
+const ProjectDetailsPage = (props) => {
+  const { project, slug } = props;
+  const projectTags = project.tags.map(t => ({ name: t }));
 
   const { textColor } = useCustomTheme();
 
   const getSeo = () => {
-    const fullUrl = `${ROOT_WEB}${ROUTE_PATHS.BLOGS_ROUTE}/${slug}`;
+    const fullUrl = `${ROOT_WEB}${ROUTE_PATHS.PROJECTS_ROUTE}/${slug}`;
     const seo = {
-      title: blog.title,
-      description: blog.excerpt,
+      title: project.title,
+      description: project.excerpt,
       canonical: fullUrl,
       openGraph: {
         type: 'website',
         url: fullUrl,
-        title: blog.title,
-        description: blog.description,
+        title: project.title,
+        description: project.description,
         images: [
           {
-            url: blog.coverImage,
-            width: 800,
-            height: 600,
-            alt: blog.coverImage,
+            url: project.coverImage,
+            alt: project.coverImage,
           },
         ],
       }
@@ -51,34 +49,36 @@ const BlogPage = (props) => {
     return seo;
   }
 
-
   return (
     <AppLayout seo={getSeo()} isShowPageScrollProgress>
-      <BlogPageContainer tags={tags}>
+      <Container maxW="4xl">
         <Box maxWidth="100%">
-          <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
-            <NextLink href={ROUTE_PATHS.BLOGS_ROUTE}>Back</NextLink>
-          </Button>
+          <NextLink href={ROUTE_PATHS.PROJECTS_ROUTE}>
+            <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
+              Back
+            </Button>
+          </NextLink>
+
           <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="12" boxShadow="inner">
             <Heading as="h2" marginTop="5" color={textColor}>
-              {blog.title}
+              {project.title}
             </Heading>
-            <Badge>{blog.createdDate}</Badge>
-            <Tags tags={blogTags} marginTop="5" />
-            <Image src={blog.coverImage} marginTop='10' />
+            <Badge>{project.createdDate}</Badge>
+            <Tags tags={projectTags} marginTop="5" />
+            <Image src={project.coverImage} marginTop='10' />
             <Divider marginTop="5" />
             <Box as="div" color={textColor}>
-              <MDXRemote components={MDXComponents} {...blog.mdxSource} />
+              <MDXRemote components={MDXComponents} {...project.mdxSource} />
             </Box>
           </Box>
         </Box>
-      </BlogPageContainer>
+      </Container>
     </AppLayout>
   );
 };
 
 export async function getStaticPaths() {
-  const slugs = await readAllPostSlugs(CONTENT_TYPE.BLOGS);
+  const slugs = await readAllPostSlugs(CONTENT_TYPE.PROJECTS);
   const paths = slugs.map(slug => ({
     params: { slug }
   }));
@@ -91,15 +91,13 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const { params: { slug } } = context;
-  const blog = await readPostBySlug(CONTENT_TYPE.BLOGS, slug);
-  const tags = await readAllTags(CONTENT_TYPE.BLOGS);
+  const project = await readPostBySlug(CONTENT_TYPE.PROJECTS, slug);
   return {
     props: {
-      blog,
-      tags,
+      project,
       slug
     }
   }
 }
 
-export default BlogPage;
+export default ProjectDetailsPage;

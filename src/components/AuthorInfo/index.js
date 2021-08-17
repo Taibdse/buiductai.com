@@ -1,10 +1,14 @@
-import { Image, HStack, Text, useColorModeValue } from '@chakra-ui/react';
 import React from 'react'
+import { Image, HStack, Text } from '@chakra-ui/react';
+
+import useCustomTheme from '@/src/hooks/useCustomTheme';
 
 function AuthorInfo(props) {
   const { author, date } = props
+  const { textColor } = useCustomTheme();
+
   return (
-    <HStack marginTop="2" spacing="2" display="flex" alignItems="center" color={useColorModeValue('gray.700', 'gray.200')}>
+    <HStack marginTop="2" spacing="2" display="flex" alignItems="center" color={textColor}>
       <Image
         borderRadius="full"
         boxSize="40px"

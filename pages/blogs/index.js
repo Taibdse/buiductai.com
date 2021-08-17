@@ -2,15 +2,21 @@
 import React from 'react';
 
 import AppLayout from '@/layouts/AppLayout';
-import { getAllBlogs, getAllTags } from '@/libs/mdx';
+import { readAllPosts, readAllTags } from '@/libs/mdx';
 import BlogPageContainer from '@/src/components/BlogPageContainer';
 import BlogList from '@/src/components/BlogList';
+import { CONTENT_TYPE } from '@/src/constants/enum';
 
 const BlogPage = (props) => {
   const { blogs, tags } = props;
 
+  const seo = {
+    title: 'Blogs',
+    description: "Duc-Tai Bui's blogs come here.",
+  };
+
   return (
-    <AppLayout seo={{ title: "dev blog" }}>
+    <AppLayout seo={seo}>
       <BlogPageContainer tags={tags}>
         <BlogList
           blogs={blogs}
@@ -22,8 +28,8 @@ const BlogPage = (props) => {
 };
 
 export async function getStaticProps() {
-  const blogs = await getAllBlogs();
-  const tags = await getAllTags();
+  const blogs = await readAllPosts(CONTENT_TYPE.BLOGS);
+  const tags = await readAllTags(CONTENT_TYPE.BLOGS);
 
   return {
     props: {

@@ -1,8 +1,8 @@
 export const ROUTE_PATHS = {
   INDEX: '/',
   BLOGS_ROUTE: '/blogs',
-  PORTFOLIO_ROUTE: '/portfolio',
+  PROJECTS_ROUTE: '/projects',
   ABOUT_ROUTE: '/about',
   HIRE_ME_ROUTE: '/hire-me',
-  TAGS_ROUTE: '/tags',
+  BLOGS_BY_TAG_ROUTE: '/blogs/tags',
 }

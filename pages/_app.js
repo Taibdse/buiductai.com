@@ -1,20 +1,21 @@
 import { ChakraProvider, extendTheme, ColorModeProvider, useColorMode } from "@chakra-ui/react"
-import '../styles/globals.css';
 import { Global, css } from '@emotion/react';
-import { MDXProvider } from '@mdx-js/react'
-import { MDXComponents } from "@/config/mdx";
-import { prismDarkTheme, prismLightTheme } from "@/styles/prism";
+import { MDXProvider } from '@mdx-js/react';
+import { DefaultSeo } from "next-seo";
 
-const theme = extendTheme({});
+import { prismDarkTheme, prismLightTheme } from "@/styles/prism";
+import { COLOR_MODES } from "@/src/constants/theme";
+import SEODefault from '@/config/seo';
+import { MDXComponents } from "@/config/mdx";
 
 const GlobalStyle = ({ children }) => {
-  const { colorMode } = useColorMode()
+  const { colorMode } = useColorMode();
 
   return (
     <>
       <Global
         styles={css`
-          ${colorMode === 'light' ? prismLightTheme : prismDarkTheme};
+          ${colorMode === COLOR_MODES.LIGHT ? prismLightTheme : prismDarkTheme};
           html {
             min-width: 356px;
             scroll-behavior: smooth;
@@ -23,7 +24,7 @@ const GlobalStyle = ({ children }) => {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background: ${colorMode === 'light' ? 'white' : '#15161a'};
+            background: ${colorMode === COLOR_MODES.LIGHT ? 'white' : '#15161a'};
           }
         `}
       />
@@ -34,22 +35,19 @@ const GlobalStyle = ({ children }) => {
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider>
       <ColorModeProvider options={{
-        initialColorMode: 'light',
-        useSystemColorMode: true
+        initialColorMode: COLOR_MODES.LIGHT,
       }}>
-        {/* <Component {...pageProps} /> */}
         <MDXProvider components={MDXComponents}>
           <GlobalStyle>
-            {/* <DefaultSeo {...SEO} /> */}
+            <DefaultSeo {...SEODefault} />
             <Component {...pageProps} />
           </GlobalStyle>
         </MDXProvider>
       </ColorModeProvider>
     </ChakraProvider>
   )
-
 }
 
 export default MyApp

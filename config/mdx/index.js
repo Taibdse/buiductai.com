@@ -1,3 +1,4 @@
+import useCustomTheme from '@/src/hooks/useCustomTheme'
 import {
   Box,
   Alert,
@@ -102,10 +103,11 @@ const DocsHeading = (props) => (
 )
 
 const Hr = () => {
-  const { colorMode } = useColorMode()
+  const { colorMode } = useColorMode();
+  const { primaryColor } = useCustomTheme();
   const borderColor = {
-    light: 'orange.200',
-    dark: 'orange.600'
+    light: `${primaryColor}.200`,
+    dark: `${primaryColor}.600`
   }
 
   return <Divider borderColor={borderColor[colorMode]} my={4} w="100%" />

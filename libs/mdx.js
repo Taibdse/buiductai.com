@@ -7,36 +7,46 @@ import { serialize } from 'next-mdx-remote/serialize';
 import remarkAutolinkHeadings from 'remark-autolink-headings';
 import remarkCodeTitles from 'remark-code-titles';
 import remarkSlug from 'remark-slug';
-
-import { MDXComponents } from '@/config/mdx';
+import { CONTENT_TYPE } from '@/src/constants/enum'
 
 export const BLOGS_PATH = path.join(process.cwd(), 'content', 'blogs');
 export const PROJECTS_PATH = path.join(process.cwd(), 'content', 'projects');
 
-export const getAllBlogSlugs = async () => {
-  const postFolders = fs.readdirSync(path.join('content', 'blogs'));
-  return postFolders;
+const getDirPath = (type) => {
+  let dirPath;
+  if (type == CONTENT_TYPE.BLOGS) dirPath = BLOGS_PATH;
+  else if (type == CONTENT_TYPE.PROJECTS) dirPath = PROJECTS_PATH;
+  return dirPath;
 }
 
-export const getAllBlogs = async () => {
-  const postFolders = fs.readdirSync(path.join('content', 'blogs'));
+export const readAllPostSlugs = async (type) => {
+  const dirPath = getDirPath(type);
+  return fs.readdirSync(dirPath);
+}
 
-  const blogs = postFolders.map(postFolder => {
-    const markdownWithMeta = fs.readFileSync(path.join('content', 'blogs', postFolder, 'index.mdx'), 'utf-8');
-    const { data, content } = matter(markdownWithMeta);
+export const readAllPosts = async (type) => {
+  let dirPath = getDirPath(type);
 
+  const folderNameList = fs.readdirSync(dirPath);
+
+  const posts = folderNameList.map(slug => {
+    const markdownWithMeta = fs.readFileSync(path.join(dirPath, slug, 'index.mdx'), 'utf-8');
+    const { data } = matter(markdownWithMeta);
     return {
       ...data,
-      content,
-      slug: postFolder,
+      slug,
     }
   });
 
-  return blogs.sort((b1, b2) => Date.parse(b2) - Date.parse(b1));
+  console.log(posts);
+
+  return posts.sort((b1, b2) => Date.parse(b2) - Date.parse(b1));
 }
 
-export const getBlogBySlug = async (slug) => {
-  const markdownWithMeta = fs.readFileSync(path.join('content', 'blogs', slug, 'index.mdx'), 'utf-8');
+export const readPostBySlug = async (type, slug) => {
+  let dirPath = getDirPath(type);
+
+  const markdownWithMeta = fs.readFileSync(path.join(dirPath, slug, 'index.mdx'), 'utf-8');
   const { data, content } = matter(markdownWithMeta);
   const mdxSource = await serialize(content, {
     mdxOptions: {
@@ -59,30 +69,27 @@ export const getBlogBySlug = async (slug) => {
   }
 }
 
-export const getBlogsByTag = async (tag) => {
-  const postFolders = fs.readdirSync(path.join('content', 'blogs'));
-
-  const blogs = postFolders.map(postFolder => {
-    const markdownWithMeta = fs.readFileSync(path.join('content', 'blogs', postFolder, 'index.mdx'), 'utf-8');
-    const { data, content } = matter(markdownWithMeta);
+export const readPostsByTag = async (type, tag) => {
+  const dirPath = getDirPath(type);
+  const folderNameList = fs.readdirSync(dirPath);
+  const posts = folderNameList.map(slug => {
+    const markdownWithMeta = fs.readFileSync(path.join(dirPath, slug, 'index.mdx'), 'utf-8');
+    const { data } = matter(markdownWithMeta);
     return {
       ...data,
-      content,
-      slug: postFolder,
+      slug: slug,
     }
-  }).filter(p => {
-    console.log(p.tags)
-    return p.tags.indexOf(tag.toLowerCase()) > -1;
-  });
+  }).filter(p => p.tags.map(t => t.toLowerCase()).indexOf(tag.toLowerCase()) > -1);
 
-  return blogs;
+  return posts;
 }
 
-export const getAllTags = async () => {
-  const postFolders = fs.readdirSync(path.join('content', 'blogs'));
+export const readAllTags = async (type) => {
+  const dirPath = getDirPath(type);
+  const folderNameList = fs.readdirSync(dirPath);
   let tags = [];
-  postFolders.forEach(postFolder => {
-    const markdownWithMeta = fs.readFileSync(path.join('content', 'blogs', postFolder, 'index.mdx'), 'utf-8');
+  folderNameList.forEach(slug => {
+    const markdownWithMeta = fs.readFileSync(path.join(dirPath, slug, 'index.mdx'), 'utf-8');
     const { data } = matter(markdownWithMeta);
     tags = tags.concat(data.tags);
   });
@@ -92,7 +99,6 @@ export const getAllTags = async () => {
     else acc[it] = 1;
     return acc;
   }, {});
-  console.log(reducedTagObj);
 
   return Object.keys(reducedTagObj).map(key => ({ name: key, numOfBlogs: reducedTagObj[key] }))
 }

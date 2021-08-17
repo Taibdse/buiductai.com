@@ -5,15 +5,20 @@ import {
   Link,
   Image,
   Text,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { ROUTE_PATHS } from '@/src/constants/routePaths';
-import BlogTags from '../Tags';
-import BlogAuthor from '../AuthorInfo';
+import useCustomTheme from '@/src/hooks/useCustomTheme';
+
+import Tags from '../Tags';
+import AuthorInfo from '../AuthorInfo';
+
 
 export default function BlogCard(props) {
   const { blog, ...restProps } = props;
-  const tags = blog.tags.map(t => ({ name: t }))
+  const { textColor, primaryColor } = useCustomTheme();
+
+  const tags = blog.tags.map(t => ({ name: t }));
+
   return (
     <Box
       display="flex"
@@ -25,6 +30,7 @@ export default function BlogCard(props) {
       boxShadow="inner"
       _hover={{ transform: 'scale(1.005)' }}
       transition="0.2s ease-in-out"
+      color={textColor}
       {...restProps}
     >
       <Box
@@ -56,7 +62,7 @@ export default function BlogCard(props) {
         marginTop={{ base: '3', sm: '0' }}>
         <Heading as="h4" fontSize="xl">
           <NextLink href={`${ROUTE_PATHS.BLOGS_ROUTE}/${blog.slug}`} passHref>
-            <Link textDecoration="none" _hover={{ textDecoration: 'none', color: 'orange' }} color={useColorModeValue('gray.700', 'gray.200')}>
+            <Link textDecoration="none" _hover={{ textDecoration: 'none', color: primaryColor }} _active={{ outline: 'none' }}>
               {blog.title}
             </Link>
           </NextLink>
@@ -64,14 +70,13 @@ export default function BlogCard(props) {
         <Text
           as="p"
           marginTop="2"
-          color={useColorModeValue('gray.700', 'gray.200')}
           fontSize="md"
           marginBottom="10px"
         >
           {blog.excerpt}
         </Text>
-        <BlogTags tags={tags} marginTop="1" />
-        <BlogAuthor author={blog.author} date={blog.createdDate} />
+        <Tags tags={tags} marginTop="1" />
+        <AuthorInfo author={blog.author} date={blog.createdDate} />
       </Box>
     </Box>
   )

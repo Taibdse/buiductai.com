@@ -1,21 +1,25 @@
-import Head from 'next/head';
 import { Container } from '@chakra-ui/react';
+import { NextSeo } from 'next-seo';
+
+import PageScrollProgress from '@/src/components/PageScrollProgress';
+import { SITE_NAME } from '@/src/constants/app';
 
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
-import PageScrollProgress from '@/src/components/PageScrollProgress';
-
 
 function AppLayout(props) {
   const { children, seo, isShowPageScrollProgress } = props;
   return (
     <div>
-      <Head>
-        <title>{seo?.title}</title>
-      </Head>
+      <NextSeo
+        title={`${seo.title} – ${SITE_NAME}`}
+        description={seo.description}
+        canonical={seo.canonical}
+        openGraph={seo.openGraph}
+      />
       {isShowPageScrollProgress && <PageScrollProgress />}
       <Navbar />
-      <Container maxW={'7xl'} marginBottom="50px" minHeight="100vh">
+      <Container maxW={'6xl'} marginBottom="50px" minHeight="100vh">
         {children}
       </Container>
       <Footer />
@@ -23,4 +27,4 @@ function AppLayout(props) {
   )
 }
 
-export default AppLayout
+export default AppLayout;
