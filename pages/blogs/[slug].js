@@ -1,8 +1,8 @@
+import React, { useState, useEffect } from 'react';
 import NextLink from 'next/link';
 import {
   Heading,
   Divider,
-  Container,
   Box,
   Image,
   Badge,
@@ -25,8 +25,10 @@ const BlogPage = (props) => {
   const { blog, tags } = props;
   const blogTags = blog.tags.map(t => ({ name: t }));
 
+
+
   return (
-    <AppLayout seo={{ title: blog.title }}>
+    <AppLayout seo={{ title: blog.title }} isShowPageScrollProgress>
       <BlogPageContainer tags={tags}>
         <Box maxWidth="100%">
           <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={useColorModeValue('gray.700', 'gray.200')}>
@@ -41,28 +43,11 @@ const BlogPage = (props) => {
             <Image src={blog.coverImage} marginTop='10' />
             <Divider marginTop="5" />
             {/* <CustomReactMarkdown content={blog.content} /> */}
-
             <MDXRemote components={MDXComponents} {...blog.mdxSource} />
-
             {/* {blogContent} */}
           </Box>
         </Box>
       </BlogPageContainer>
-      {/* <Container maxW={'container.lg'}>
-        <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5">
-          <NextLink href={ROUTE_PATHS.BLOGS_ROUTE}>Back</NextLink>
-        </Button>
-        <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="12" boxShadow="inner">
-          <Heading as="h2" marginTop="5">
-            {blog.title}
-          </Heading>
-          <Badge>{blog.createdDate}</Badge>
-          <BlogTags tags={blog.tags} marginTop="5" />
-          <Image src={blog.coverImage} marginTop='10' />
-          <Divider marginTop="5" />
-          <CustomReactMarkdown content={blog.content} />
-        </Box>
-      </Container> */}
     </AppLayout>
   );
 };
