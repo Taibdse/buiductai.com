@@ -70,7 +70,7 @@ function Footer() {
         <Text>© 2021 BUIDUCTAI.COM</Text>
         <Stack direction={'row'} spacing={6}>
           {socialSites.map(socialSite => (
-            <SocialButton label={socialSite.label} href={socialSite.href}>
+            <SocialButton label={socialSite.label} href={socialSite.href} key={socialSite.href}>
               {socialSite.icon}
             </SocialButton>
           ))}

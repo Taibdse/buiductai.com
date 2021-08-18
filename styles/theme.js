@@ -4,6 +4,6 @@ export const APP_THEME = {
     light: 'gray.700',
     dark: 'gray.200',
   },
-  primaryColor: 'teal'
+  primaryColor: 'pink'
 }
 

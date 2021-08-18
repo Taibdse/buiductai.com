@@ -7,9 +7,14 @@ import {
   Link,
   Text,
   Divider,
-  useColorMode
+  useColorMode,
+  IconButton,
+  Tooltip
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
+import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
+import NextLink from 'next/link';
+
+import useCopyToClipboard from '@/src/hooks/useCopyToClipboard';
 
 const CustomLink = (props) => {
   const { colorMode } = useColorMode()
@@ -113,6 +118,25 @@ const Hr = () => {
   return <Divider borderColor={borderColor[colorMode]} my={4} w="100%" />
 }
 
+
+const Pre = (props) => {
+  const { children, ...rest } = props;
+  const { copied, copy, ref } = useCopyToClipboard();
+
+  return (
+    <Box as="div" position="relative">
+      <pre {...rest} ref={ref} style={{ paddingTop: '30px' }}>
+        <Tooltip label="Copy to clipboard" placement="top">
+          <Box as="div" position="absolute" top="0" right="0" display="flex">
+            <IconButton aria-label="Copy to clipboard" icon={copied ? <CheckIcon /> : <CopyIcon />} onClick={copy} mr="2" mt="2" />
+          </Box>
+        </Tooltip>
+        {children}
+      </pre>
+    </Box>
+  )
+}
+
 export const MDXComponents = {
   h1: (props) => <Heading as="h1" size="xl" my={4} {...props} />,
   h2: (props) => <DocsHeading as="h2" size="lg" fontWeight="bold" {...props} />,
@@ -130,5 +154,6 @@ export const MDXComponents = {
   ul: (props) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
   ol: (props) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
   li: (props) => <Box as="li" pb={1} {...props} />,
-  blockquote: Quote
+  blockquote: Quote,
+  pre: Pre
 }
