@@ -4,10 +4,10 @@ import {
   Heading,
   Divider,
   Box,
-  Image,
   Badge,
   Button,
   Container,
+  Link,
 } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { MDXRemote } from 'next-mdx-remote'
@@ -20,12 +20,13 @@ import { MDXComponents } from '@/config/mdx';
 import useCustomTheme from '@/src/hooks/useCustomTheme';
 import { ROOT_WEB } from '@/src/constants/app';
 import { CONTENT_TYPE } from '@/src/constants/enum';
+import ImageDisplay from '@/src/components/ImageDisplay';
 
 const ProjectDetailsPage = (props) => {
   const { project, slug } = props;
   const projectTags = project.tags.map(t => ({ name: t }));
 
-  const { textColor } = useCustomTheme();
+  const { textColor, primaryColor } = useCustomTheme();
 
   const getSeo = () => {
     const fullUrl = `${ROOT_WEB}${ROUTE_PATHS.PROJECTS_ROUTE}/${slug}`;
@@ -64,8 +65,9 @@ const ProjectDetailsPage = (props) => {
               {project.title}
             </Heading>
             <Badge>{project.createdDate}</Badge>
+            <Link href={project.url} color={primaryColor} isExternal display="block">View website</Link>
             <Tags tags={projectTags} marginTop="5" />
-            <Image src={project.coverImage} marginTop='10' />
+            <ImageDisplay src={project.largeImage} marginTop='10' />
             <Divider marginTop="5" />
             <Box as="div" color={textColor}>
               <MDXRemote components={MDXComponents} {...project.mdxSource} />

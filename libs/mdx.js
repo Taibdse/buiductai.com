@@ -38,8 +38,6 @@ export const readAllPosts = async (type) => {
     }
   });
 
-  console.log(posts);
-
   return posts.sort((b1, b2) => Date.parse(b2) - Date.parse(b1));
 }
 

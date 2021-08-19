@@ -1,5 +1,5 @@
 import React from 'react';
-import { WrapItem, Wrap, Heading, Divider, Box } from '@chakra-ui/react';
+import { WrapItem, Wrap, Heading, Divider, Box, SimpleGrid } from '@chakra-ui/react';
 
 import AppLayout from '@/layouts/AppLayout';
 import ProjectCard from '@/src/components/ProjectCard';
@@ -22,20 +22,18 @@ function ProjectsPage(props) {
 
   return (
     <AppLayout seo={seo}>
-      {/* <Heading as="h2" textAlign="center" marginTop="5" marginBottom="30px" color={textColor}>Portfolio</Heading> */}
       {projects.length === 0 && (<Heading as="h3">Projects will be added later!</Heading>)}
 
       {realWorldProjects.length > 0 && (
         <Box marginBottom="10">
           <Heading as="h3" fontSize="2xl" color={textColor} marginTop="5">Real world projects</Heading>
           <Divider marginTop="5" marginBottom="5" />
-          <Wrap spacing="0" w="100%">
+
+          <SimpleGrid columns={[1, 2, 3]} spacing={['10px', '15px', '20px']}>
             {realWorldProjects.map(project => (
-              <WrapItem key={project} width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }} p={[1, 2, 3]}>
-                <ProjectCard project={project} />
-              </WrapItem>
+              <ProjectCard project={project} key={project.slug} />
             ))}
-          </Wrap>
+          </SimpleGrid>
         </Box>
       )}
 
@@ -43,13 +41,11 @@ function ProjectsPage(props) {
         <Box>
           <Heading as="h3" fontSize="2xl" color={textColor}>Side projects</Heading>
           <Divider marginTop="5" marginBottom="5" />
-          <Wrap spacing="0">
+          <SimpleGrid columns={[1, 2, 3]} spacing={['10px', '15px', '20px']}>
             {sideProjects.map(project => (
-              <WrapItem key={project} width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }} p={[1, 2, 3]}>
-                <ProjectCard project={project} />
-              </WrapItem>
+              <ProjectCard project={project} key={project.slug} />
             ))}
-          </Wrap>
+          </SimpleGrid>
         </Box>
       )}
     </AppLayout>

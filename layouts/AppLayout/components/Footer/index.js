@@ -11,6 +11,7 @@ import {
 import { FaFacebook, FaGithub, FaInstagram, FaTwitter } from 'react-icons/fa';
 
 import useCustomTheme from '@/src/hooks/useCustomTheme';
+import { SITE_NAME } from '@/src/constants/app';
 
 const SocialButton = (props) => {
   const {
@@ -67,7 +68,7 @@ function Footer() {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}
       >
-        <Text>© 2021 BUIDUCTAI.COM</Text>
+        <Text>Copyright 2021 © {SITE_NAME}</Text>
         <Stack direction={'row'} spacing={6}>
           {socialSites.map(socialSite => (
             <SocialButton label={socialSite.label} href={socialSite.href} key={socialSite.href}>

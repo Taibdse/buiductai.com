@@ -7,6 +7,7 @@ import { prismDarkTheme, prismLightTheme } from "@/styles/prism";
 import { COLOR_MODES } from "@/src/constants/theme";
 import SEODefault from '@/config/seo';
 import { MDXComponents } from "@/config/mdx";
+import { APP_THEME } from "@/styles/theme";
 
 const GlobalStyle = ({ children }) => {
   const { colorMode } = useColorMode();
@@ -24,7 +25,11 @@ const GlobalStyle = ({ children }) => {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background: ${colorMode === COLOR_MODES.LIGHT ? 'white' : '#15161a'};
+            background: ${colorMode === COLOR_MODES.LIGHT ? 'white' : '#15161A'};
+          }
+          ::selection {
+            background: ${APP_THEME.primaryColor};
+            color: black
           }
         `}
       />

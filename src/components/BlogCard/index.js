@@ -3,7 +3,6 @@ import {
   Box,
   Heading,
   Link,
-  Image,
   Text,
 } from '@chakra-ui/react';
 import { ROUTE_PATHS } from '@/src/constants/routePaths';
@@ -11,6 +10,7 @@ import useCustomTheme from '@/src/hooks/useCustomTheme';
 
 import Tags from '../Tags';
 import AuthorInfo from '../AuthorInfo';
+import ImageDisplay from '../ImageDisplay';
 
 
 export default function BlogCard(props) {
@@ -24,6 +24,7 @@ export default function BlogCard(props) {
       display="flex"
       flexDirection={{ base: 'column', sm: 'row' }}
       justifyContent="space-between"
+
       borderWidth="1px"
       borderRadius="10"
       p={[1, 2, 5]}
@@ -37,14 +38,16 @@ export default function BlogCard(props) {
         display="flex"
         flex="1"
         position="relative"
-        alignItems="center">
+        alignItems="center"
+      >
         <Box
-          width={{ base: '100%', sm: '85%' }}
+          width={{ base: '100%', sm: '100%' }}
           zIndex="2"
+          pr={[0, 0, 3]}
         >
           <NextLink href={`${ROUTE_PATHS.BLOGS_ROUTE}/${blog.slug}`} passHref>
             <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
-              <Image
+              <ImageDisplay
                 borderRadius="lg"
                 src={blog.coverImage}
                 alt={blog.title}
@@ -59,7 +62,8 @@ export default function BlogCard(props) {
         flex="2"
         flexDirection="column"
         justifyContent="center"
-        marginTop={{ base: '3', sm: '0' }}>
+        marginTop={{ base: '3', sm: '0' }}
+      >
         <Heading as="h4" fontSize="xl">
           <NextLink href={`${ROUTE_PATHS.BLOGS_ROUTE}/${blog.slug}`} passHref>
             <Link textDecoration="none" _hover={{ textDecoration: 'none', color: primaryColor }} _active={{ outline: 'none' }}>
@@ -78,6 +82,6 @@ export default function BlogCard(props) {
         <Tags tags={tags} marginTop="1" />
         <AuthorInfo author={blog.author} date={blog.createdDate} />
       </Box>
-    </Box>
+    </Box >
   )
 }

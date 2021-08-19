@@ -24,10 +24,10 @@ import SwitchColorMode from '@/src/components/SwitchColorMode';
 import useCustomTheme from '@/src/hooks/useCustomTheme';
 
 const NAV_ITEMS = [
-  // {
-  //   label: 'About me',
-  //   href: ROUTE_PATHS.ABOUT_ROUTE
-  // },
+  {
+    label: 'Home',
+    href: ROUTE_PATHS.INDEX
+  },
   {
     label: 'Projects',
     href: ROUTE_PATHS.PROJECTS_ROUTE
@@ -42,8 +42,18 @@ const NAV_ITEMS = [
   // },
 ];
 
+const isMatchRoute = (pathname, href) => {
+  if ((pathname === '/' || pathname === '') && (href === '' || href === '/')) {
+    return true;
+  } else if (pathname.length > 1 && href.length > 1) {
+    return pathname.indexOf(href) === 0;
+  }
+  return false;
+}
+
 const DesktopNav = () => {
   const router = useRouter();
+
   const { primaryColor } = useCustomTheme();
   const linkColor = useColorModeValue('gray.600', 'gray.200');
   const linkHoverColor = useColorModeValue(primaryColor, `${primaryColor}.300`);
@@ -55,9 +65,9 @@ const DesktopNav = () => {
           <NextLink href={navItem.href} passHref>
             <Link
               p={2}
-              fontSize={'sm'}
+              fontSize={'md'}
               fontWeight={500}
-              color={router.pathname.indexOf(navItem.href) === 0 ? primaryColor : linkColor}
+              color={isMatchRoute(router.pathname, navItem.href) ? primaryColor : linkColor}
               _hover={{
                 textDecoration: 'none',
                 color: linkHoverColor,
@@ -75,7 +85,7 @@ const DesktopNav = () => {
 const MobileNav = () => {
   return (
     <Stack
-      bg={useColorModeValue('white', 'gray.800')}
+      bg={useColorModeValue('gray.50', 'gray.800')}
       p={4}
       display={{ md: 'none' }}>
       {NAV_ITEMS.map((navItem) => (
@@ -104,7 +114,7 @@ const MobileNavItem = ({ label, children, href }) => {
       >
         <Text
           fontWeight={600}
-          color={router.pathname.indexOf(href) === 0 ? primaryColor : useColorModeValue('gray.600', 'gray.200')}
+          color={isMatchRoute(router.pathname, href) ? primaryColor : useColorModeValue('gray.600', 'gray.200')}
         >
           {label}
         </Text>
@@ -143,7 +153,7 @@ const MobileNavItem = ({ label, children, href }) => {
 
 function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
-  const bg = useColorModeValue('white', 'gray.800');
+  const bg = useColorModeValue('gray.50', 'gray.900');
   const { textColor, primaryColor } = useCustomTheme();
 
   return (
@@ -181,6 +191,7 @@ function Navbar() {
               color={useColorModeValue(primaryColor, primaryColor)}
               fontWeight="bold"
               cursor="pointer"
+              fontSize="xl"
             >
               BUIDUCTAI.COM
             </Text>
@@ -194,7 +205,6 @@ function Navbar() {
           <SwitchColorMode />
         </Flex>
       </Flex>
-
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>

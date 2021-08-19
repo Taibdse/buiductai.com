@@ -9,7 +9,8 @@ import {
   Divider,
   useColorMode,
   IconButton,
-  Tooltip
+  Tooltip,
+  position
 } from '@chakra-ui/react'
 import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
@@ -120,20 +121,53 @@ const Hr = () => {
 
 
 const Pre = (props) => {
+  console.log('props');
+  console.log(props["data-title"])
+  console.log(props)
   const { children, ...rest } = props;
   const { copied, copy, ref } = useCopyToClipboard();
 
   return (
-    <Box as="div" position="relative">
-      <pre {...rest} ref={ref} style={{ paddingTop: '30px' }}>
-        <Tooltip label="Copy to clipboard" placement="top">
-          <Box as="div" position="absolute" top="0" right="0" display="flex">
-            <IconButton aria-label="Copy to clipboard" icon={copied ? <CheckIcon /> : <CopyIcon />} onClick={copy} mr="2" mt="2" />
-          </Box>
-        </Tooltip>
-        {children}
-      </pre>
-    </Box>
+    <>
+      {props.className?.indexOf('language-') > -1 ? (
+        <Box as="div" position="relative" marginTop="-25px">
+          <Tooltip label="Copy to clipboard" placement="top">
+            <IconButton
+              size="sm"
+              aria-label="Copy to clipboard"
+              icon={copied ? <CheckIcon /> : <CopyIcon />}
+              onClick={copy}
+              position="absolute"
+              top="-35px"
+              right="15px"
+              zIndex="1000"
+            />
+          </Tooltip>
+          <pre {...rest} ref={ref} style={{ borderTopLeftRadius: '0px', borderTopRightRadius: '0px' }}>
+            {children}
+          </pre>
+        </Box>
+      ) : (
+        <pre {...rest} >
+          {children}
+        </pre>
+      )}
+    </>
+    // <div style={{ position: 'relative' }}>
+    //   <pre {...rest} ref={ref}>
+    //     <Box as="div">
+    //       <Tooltip label="Copy to clipboard" placement="top">
+    //         <Box as="div" position="absolute" top="0px" right="0" display="flex">
+    //           <IconButton aria-label="Copy to clipboard" size="sm" icon={copied ? <CheckIcon /> : <CopyIcon />} onClick={copy} mr="2" mt="2" />
+    //         </Box>
+    //       </Tooltip>
+    //     </Box>
+    //     {children}
+    //   </pre>
+    // </div>
+    // <div style={{ position: 'relative' }}>
+    //   <pre {...rest}>{children}</pre>
+    // </div>
   )
 }
 
@@ -155,5 +189,5 @@ export const MDXComponents = {
   ol: (props) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
   li: (props) => <Box as="li" pb={1} {...props} />,
   blockquote: Quote,
-  pre: Pre
+  pre: (props) => <Pre {...props} />
 }

@@ -22,7 +22,7 @@ function PageScrollProgress() {
   })
 
   return (
-    <Box h={1.5} as="div" bgGradient="linear(to-r, green.200, pink.500)" position="sticky" top={0} zIndex={100} w={`${width}%`}></Box>
+    <Box h={1.5} as="div" bgGradient="linear(to-r, green.200, pink.500)" position="fixed" top={0} zIndex={100} w={`${width}%`}></Box>
   )
 }
 

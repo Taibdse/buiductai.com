@@ -1,7 +1,8 @@
 import React from 'react'
-import { Image, HStack, Text } from '@chakra-ui/react';
+import { HStack, Text } from '@chakra-ui/react';
 
 import useCustomTheme from '@/src/hooks/useCustomTheme';
+import ImageDisplay from '../ImageDisplay';
 
 function AuthorInfo(props) {
   const { author, date } = props
@@ -9,7 +10,7 @@ function AuthorInfo(props) {
 
   return (
     <HStack marginTop="2" spacing="2" display="flex" alignItems="center" color={textColor}>
-      <Image
+      <ImageDisplay
         borderRadius="full"
         boxSize="40px"
         src={author.avatar}

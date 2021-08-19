@@ -10,7 +10,7 @@ const prismBaseTheme = css`
     color: ${theme.colors.gray[800]};
     background: none;
     font-family: ${theme.fonts.mono};
-    font-size: ${theme.fontSizes[2]};
+    font-size: ${theme.fontSizes['md']};
     text-align: left;
     word-spacing: normal;
     word-break: normal;
@@ -34,7 +34,7 @@ const prismBaseTheme = css`
     margin: ${theme.space[6]} 0;
     overflow: auto;
     min-width: 100%;
-    font-size: 0.9rem;
+    font-size: 1rem;
     white-space: nowrap;
   }
   :not(pre) > code[class*='language-'],
@@ -127,7 +127,7 @@ const prismBaseTheme = css`
     border: 1px solid ${theme.colors.gray[200]};
     border-top-left-radius: ${theme.radii.lg};
     border-top-right-radius: ${theme.radii.lg};
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 0;
     width: 100%;
