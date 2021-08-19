@@ -56,9 +56,11 @@ const BlogPage = (props) => {
     <AppLayout seo={getSeo()} isShowPageScrollProgress>
       <BlogPageContainer tags={tags}>
         <Box maxWidth="100%">
-          <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
-            <NextLink href={ROUTE_PATHS.BLOGS_ROUTE}>Back</NextLink>
-          </Button>
+          <NextLink href={ROUTE_PATHS.BLOGS_ROUTE}>
+            <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
+              Back
+            </Button>
+          </NextLink>
           <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="12" boxShadow="inner">
             <Heading as="h2" marginTop="5" color={textColor}>
               {blog.title}
