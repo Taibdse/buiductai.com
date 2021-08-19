@@ -1,6 +1,6 @@
 import React from 'react';
 import NextLink from 'next/link';
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Text } from '@chakra-ui/react'
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Text } from '@chakra-ui/react'
 
 import AppLayout from '@/layouts/AppLayout'
 import { ROUTE_PATHS } from '@/src/constants/routePaths'
@@ -8,6 +8,7 @@ import useCustomTheme from '@/src/hooks/useCustomTheme';
 
 export default function Page404() {
   const { textColor, primaryColor } = useCustomTheme();
+
   const seo = {
     title: '404 Not Found',
     description: '404 Not Found'

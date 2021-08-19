@@ -65,7 +65,7 @@ const BlogPage = (props) => {
             </Heading>
             <Badge mt="3">{blog.createdDate} - {blog.readingTime.text} - {blog.readingTime.words} words</Badge>
             <Tags tags={blogTags} marginTop="5" />
-            <ImageDisplay src={blog.coverImage} marginTop='10' />
+            <ImageDisplay src={blog.coverImage} alt={blog.coverImage} marginTop='10' />
             <Divider marginTop="5" />
             <Box as="div" color={textColor}>
               <MDXRemote components={MDXComponents} {...blog.mdxSource} />

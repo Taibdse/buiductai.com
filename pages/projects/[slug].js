@@ -67,7 +67,7 @@ const ProjectDetailsPage = (props) => {
             <Badge>{project.createdDate}</Badge>
             <Link href={project.url} color={primaryColor} isExternal display="block">View website</Link>
             <Tags tags={projectTags} marginTop="5" />
-            <ImageDisplay src={project.largeImage} marginTop='10' />
+            <ImageDisplay src={project.largeImage} alt={project.largeImage} marginTop='10' />
             <Divider marginTop="5" />
             <Box as="div" color={textColor}>
               <MDXRemote components={MDXComponents} {...project.mdxSource} />
