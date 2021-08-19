@@ -38,7 +38,7 @@ function BlogList(props) {
           pointerEvents="none"
           children={<SearchIcon color="gray.300" />}
         />
-        <Input placeholder="Search bolgs..." value={searchValue} onChange={handleChangeSearchValue} color={textColor} />
+        <Input placeholder="Search blogs..." value={searchValue} onChange={handleChangeSearchValue} color={textColor} />
       </InputGroup>
       {isEmpty(filteredBlogs) && <Heading as="h3" color={textColor}>No Blogs found</Heading>}
       {!isEmpty(filteredBlogs) && filteredBlogs.map(blog => (

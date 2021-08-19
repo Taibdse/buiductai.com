@@ -15,8 +15,8 @@ export default function Home() {
           <Stack spacing="4" color={textColor}>
             <Text>Hello, My name is Duc Tai.</Text>
             <Text>I am a fullstack developer living in Ho Chi Minh City.</Text>
-            <Text>I have passion about coding, playing sports such as badminton, soccer, king chess, swimming,...</Text>
-            <Text>I also love cute pets too, cats, dogs,...</Text>
+            <Text>I have passion about coding, maths, watching movies, playing sports such as badminton, soccer, king chess, swimming,...</Text>
+            <Text>I also love cute pets too like cats, dogs,...</Text>
             <Text>This website is where i share my knowledge to all of you guys</Text>
             <Text>I hope you will enjoy my contents, big thanks to you.</Text>
           </Stack>

@@ -41,8 +41,8 @@ const ProjectDetailsPage = (props) => {
         description: project.description,
         images: [
           {
-            url: project.coverImage,
-            alt: project.coverImage,
+            url: project.thumbnailImage,
+            alt: project.thumbnailImage,
           },
         ],
       }
