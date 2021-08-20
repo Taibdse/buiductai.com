@@ -29,7 +29,7 @@ function ProjectsPage(props) {
           <Heading as="h3" fontSize="2xl" color={textColor} marginTop="5">Real world projects</Heading>
           <Divider marginTop="5" marginBottom="5" />
 
-          <SimpleGrid columns={[1, 2, 3]} spacing={['10px', '15px', '20px']}>
+          <SimpleGrid columns={[1, 2, 3]} spacing={['15px', '15px', '20px']}>
             {realWorldProjects.map(project => (
               <ProjectCard project={project} key={project.slug} />
             ))}

@@ -38,7 +38,7 @@ export const readAllPosts = async (type) => {
     }
   });
 
-  return posts.sort((b1, b2) => Date.parse(b2) - Date.parse(b1));
+  return posts.sort((b1, b2) => Date.parse(b2.createdDate) - Date.parse(b1.createdDate));
 }
 
 export const readPostBySlug = async (type, slug) => {

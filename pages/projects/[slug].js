@@ -52,29 +52,24 @@ const ProjectDetailsPage = (props) => {
 
   return (
     <AppLayout seo={getSeo()} isShowPageScrollProgress>
-      <Container maxW="4xl">
-        <Box maxWidth="100%">
-          <NextLink href={ROUTE_PATHS.PROJECTS_ROUTE}>
-            <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
-              Back
-            </Button>
-          </NextLink>
-
-          <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="12" boxShadow="inner">
-            <Heading as="h2" marginTop="5" color={textColor}>
-              {project.title}
-            </Heading>
-            <Badge>{project.createdDate}</Badge>
-            <Link href={project.url} color={primaryColor} isExternal display="block">View website</Link>
-            <Tags tags={projectTags} marginTop="5" />
-            <ImageDisplay src={project.largeImage} alt={project.largeImage} marginTop='10' />
-            <Divider marginTop="5" />
-            <Box as="div" color={textColor}>
-              <MDXRemote components={MDXComponents} {...project.mdxSource} />
-            </Box>
-          </Box>
+      <Box overflow="hidden" p={0} maxWidth="3xl" margin="auto">
+        <NextLink href={ROUTE_PATHS.PROJECTS_ROUTE}>
+          <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
+            Back
+          </Button>
+        </NextLink>
+        <Heading as="h2" marginTop="5" color={textColor}>
+          {project.title}
+        </Heading>
+        <Badge mt="2">{project.createdDate}</Badge>
+        <Link href={project.url} color={primaryColor} isExternal display="block" my="3">View website</Link>
+        <Tags tags={projectTags} isLinkHidden marginTop="5" />
+        <ImageDisplay src={project.largeImage} alt={project.largeImage} marginTop='10' />
+        <Divider marginTop="5" />
+        <Box as="div" color={textColor}>
+          <MDXRemote components={MDXComponents} {...project.mdxSource} />
         </Box>
-      </Container>
+      </Box>
     </AppLayout>
   );
 };

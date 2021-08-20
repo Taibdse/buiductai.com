@@ -17,7 +17,7 @@ function BlogPageContainer(props) {
             Tags
           </Heading>
           <Divider marginTop="5" marginBottom="5" />
-          <BlogTags tags={tags} isShowNumOfBlog />
+          <BlogTags tags={tags} isShowNumOfPosts />
         </Box>
       </WrapItem>
       <WrapItem width={{ base: '100%', md: '75%', lg: '75%', xl: '75%' }} paddingLeft={['0px', '0px', '10px']}>

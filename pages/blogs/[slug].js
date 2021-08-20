@@ -55,23 +55,21 @@ const BlogPage = (props) => {
   return (
     <AppLayout seo={getSeo()} isShowPageScrollProgress>
       <BlogPageContainer tags={tags}>
-        <Box maxWidth="100%">
+        <Box overflow="hidden" p={[1, 2, 3]}>
           <NextLink href={ROUTE_PATHS.BLOGS_ROUTE}>
             <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
               Back
             </Button>
           </NextLink>
-          <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="12" boxShadow="inner">
-            <Heading as="h2" marginTop="5" color={textColor}>
-              {blog.title}
-            </Heading>
-            <Badge mt="3">{blog.createdDate} - {blog.readingTime.text} - {blog.readingTime.words} words</Badge>
-            <Tags tags={blogTags} marginTop="5" />
-            <ImageDisplay src={blog.coverImage} alt={blog.coverImage} marginTop='10' />
-            <Divider marginTop="5" />
-            <Box as="div" color={textColor}>
-              <MDXRemote components={MDXComponents} {...blog.mdxSource} />
-            </Box>
+          <Heading as="h2" marginTop="5" color={textColor}>
+            {blog.title}
+          </Heading>
+          <Badge mt="3">{blog.createdDate} - {blog.readingTime.text} - {blog.readingTime.words} words</Badge>
+          <Tags tags={blogTags} marginTop="5" />
+          <ImageDisplay src={blog.coverImage} alt={blog.coverImage} marginTop='10' />
+          <Divider marginTop="5" />
+          <Box as="div" color={textColor}>
+            <MDXRemote components={MDXComponents} {...blog.mdxSource} />
           </Box>
         </Box>
       </BlogPageContainer>

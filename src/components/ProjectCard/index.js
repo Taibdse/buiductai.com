@@ -25,6 +25,7 @@ function ProjectCard(props) {
       _hover={{ transform: 'scale(1.02)' }}
       transition="0.2s ease-in-out"
       color={textColor}
+      mb="5"
     >
       <Box borderRadius="lg" overflow="hidden" >
         <NextLink href={`${ROUTE_PATHS.PROJECTS_ROUTE}/${project.slug}`} passHref>
@@ -50,7 +51,7 @@ function ProjectCard(props) {
           </Link>
         </NextLink>
       </Heading>
-      <Tags tags={tags} marginTop="3" />
+      <Tags tags={tags} isLinkHidden marginTop="3" />
       <Text as="p" fontSize="md" marginTop="2">
         {project.excerpt}
       </Text>
