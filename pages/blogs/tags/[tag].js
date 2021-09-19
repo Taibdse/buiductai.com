@@ -6,6 +6,7 @@ import { CONTENT_TYPE } from '@/src/constants/enum';
 
 function BlogByTagPage(props) {
   const { blogs, tags, tag } = props;
+
   const seo = {
     title: `Blogs of tag ${tag}`,
     description: `Duc-Tai Bui's blogs of tag ${tag} come here.`,

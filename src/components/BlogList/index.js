@@ -20,12 +20,12 @@ function BlogList(props) {
 
   const handleSearchBlogs = (searchValue) => {
     const newFilteredBlogs = blogs.filter(b => include(b.title, searchValue))
-    setFilteredBlogs(newFilteredBlogs)
+    setFilteredBlogs(newFilteredBlogs);
   }
 
   useEffect(() => {
     handleSearchBlogs(searchValue)
-  }, [searchValue]);
+  }, [searchValue, blogs]);
 
   return (
     <Box>
