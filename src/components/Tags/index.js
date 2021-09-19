@@ -1,6 +1,7 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { Box, Tag, TagLabel } from '@chakra-ui/react';
+
 import { ROUTE_PATHS } from '@/src/constants/routePaths';
 import useCustomTheme from '@/src/hooks/useCustomTheme';
 
@@ -19,11 +20,12 @@ const Tags = (props) => {
             </Tag>
           </React.Fragment>
         )
-        return isLinkHidden ? children : (
-          <NextLink key={tag.name} href={`${ROUTE_PATHS.BLOGS_BY_TAG_ROUTE}/${tag.name}`}>
-            {children}
-          </NextLink>
-        );
+        return <NextLink key={tag.name} href={`${ROUTE_PATHS.BLOGS_BY_TAG_ROUTE}/${tag.name}`}>
+          <Tag size={'md'} variant="solid" cursor="pointer" margin="0 8px 10px 0" colorScheme={primaryColor}>
+            <TagLabel marginRight={isShowNumOfPosts && 1}>{tag.name}</TagLabel>
+            {isShowNumOfPosts && <TagLabel>({tag.numOfBlogs})</TagLabel>}
+          </Tag>
+        </NextLink>;
         // return (
         //   <NextLink key={tag.name} href={`${ROUTE_PATHS.BLOGS_BY_TAG_ROUTE}/${tag.name}`}>
         //     <Tag size={'md'} variant="solid" cursor="pointer" margin="0 8px 10px 0" colorScheme={primaryColor}>

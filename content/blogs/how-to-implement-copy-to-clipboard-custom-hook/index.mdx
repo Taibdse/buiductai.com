@@ -1,0 +1,160 @@
+---
+title: "How to implement useCopyToClipboard custom hook in ReactJS"
+createdDate: "2021-17-09"
+excerpt: "Custom hook useCopyToClipboard is a great way to reuse logic of copying text content in web browser"
+thumbnailImage: ""
+largeImage: ""
+tags: ["reactjs", "hooks", "javascript"]
+author:
+  name: Duc-Tai Bui
+  avatar: https://res.cloudinary.com/ductai/image/upload/v1629090075/buiductai.com/author/avatar_kddb1i.jpg
+---
+
+Hello everyone, today I will introduce you the way to reuse copy to clipboard logic using ReactJS custom hooks.
+
+Firstly, we need a function to implement copy to clipboard in browser.
+
+### Implement copyToClipboard function
+
+```js:utils.js
+export const copyToClipboard = (text) => {
+  return new Promise((resolve, reject) => {
+    if (navigator?.clipboard) {
+      const cb = navigator.clipboard;
+
+      cb.writeText(text).then(resolve).catch(reject);
+    } else {
+      try {
+        const body = document.querySelector('body');
+
+        const textarea = document.createElement('textarea');
+        body.appendChild(textarea);
+
+        textarea.value = text;
+        textarea.select();
+        document.execCommand('copy');
+
+        body.removeChild(textarea);
+
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    }
+  })
+}
+```
+
+Ok, I will explain the idea of above code. I think it's pretty easy to understand when you have a basic knowledge of Javascript.
+
+The function **copyToClipboard** will receive a text need copying and return a Promise when done copying to browser clipboard.
+
+We checked if the browser support API copy to clipboard by checking **navigator.clipboard** is available. If this feature is supported, I call the function **writeText()**.
+
+If browser does not support **navigator.clipboard**, I have to use behaviour of **document** to excute command copy of selected text.
+To do that, i create a textarea and set the text need to copying to element's value. After that I make selection to the text value and call **body.execCommand('copy')** function to copy.
+
+And finally I remove the textarea element from the DOM.
+
+### useCopyToClipboard hook declararation.
+
+```js:useCopyToClipboard.js
+import { useEffect, useRef, useState } from 'react';
+import { useToast } from '@chakra-ui/react';
+
+import { copyToClipboard } from 'somewhere/utils.js';
+
+const TIMEOUT_MILISECONDS = 2000;
+
+const useCopyToClipboard = () => {
+  const [copied, setCopied] = useState(false);
+  const toast = useToast();
+  const ref = useRef();
+
+  const copy = () => {
+    if (copied || !ref?.current) return;
+    copyToClipboard(ref.current.innerText);
+    setCopied(true);
+    toast({ description: 'Copied to clipboard!', status: 'success', position: 'top', duration: TIMEOUT_MILISECONDS });
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => setCopied(false), TIMEOUT_MILISECONDS);
+
+    return () => clearTimeout(timer);
+  }, [copied]);
+
+  return { copied, copy, ref };
+}
+
+export default useCopyToClipboard;
+```
+
+I declared a state **copied** with initial value is false.
+
+I used hook **useToast** of **chakra-ui** to show a notification toast when text copied successfullly.
+
+I declared a **ref** to make a reference to an element that contain a text content to copy.
+
+**TIMEOUT_MILISECONDS** is the time to transform state **copied** from true to false.
+
+The return value of hook are object contains state **state**, function **copy** to handle logic and a **ref** to refer to element.
+
+That's it for a custom hook.
+
+I will go to the next part is how i use my custom hook in component.
+
+### Usage of useCopyToClipboard hook in component
+
+```js:Pre.js
+const Pre = (props) => {
+  const { children, ...rest } = props;
+  const { copied, copy, ref } = useCopyToClipboard();
+
+  return (
+    <>
+      {props.className?.indexOf('language-') > -1 ? (
+        <Box as="div" position="relative" marginTop="-25px">
+          <Tooltip label="Copy to clipboard" placement="top">
+            <IconButton
+              size="sm"
+              aria-label="Copy to clipboard"
+              icon={copied ? <CheckIcon /> : <CopyIcon />}
+              onClick={copy}
+              position="absolute"
+              top="-35px"
+              right="15px"
+              zIndex="1000"
+            />
+          </Tooltip>
+          <pre {...rest} ref={ref} style={{ borderTopLeftRadius: '0px', borderTopRightRadius: '0px' }}>
+            {children}
+          </pre>
+        </Box>
+      ) : (
+        <pre {...rest} >
+          {children}
+        </pre>
+      )}
+    </>
+  )
+}
+
+export default Pre;
+```
+
+The component above is my component to build this blog, so you don't need to understand every lines of code.
+You just need to understand how to use hook **useCopyToClipboard**.
+
+The hook return 3 variables:
+
+- **ref** is a reference to an element you want to copy it's text content
+- **copy** is a function to handle logic of copying
+- **copied** is a state to check if the text content has been copied yet.
+
+### Conclusion & self-promotion
+
+As you can see, with some basic knowledges of Javascript, browser API and ReactJS combination, We can build an amazing hook that saves us few hours of coding.
+The main benefit of **custom hook** is to reuse logic between many components and make our components look readable and clean.
+
+**Thanks for your reading.**

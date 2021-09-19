@@ -20,6 +20,7 @@ import { MDXComponents } from '@/config/mdx';
 import useCustomTheme from '@/src/hooks/useCustomTheme';
 import { ROOT_WEB } from '@/src/constants/app';
 import { CONTENT_TYPE } from '@/src/constants/enum';
+import { isEmpty } from '@/src/utils/validation';
 import ImageDisplay from '@/src/components/ImageDisplay';
 
 const ProjectDetailsPage = (props) => {
@@ -64,7 +65,7 @@ const ProjectDetailsPage = (props) => {
         <Badge mt="2">{project.createdDate}</Badge>
         <Link href={project.url} color={primaryColor} isExternal display="block" my="3">View website</Link>
         <Tags tags={projectTags} isLinkHidden marginTop="5" />
-        <ImageDisplay src={project.largeImage} alt={project.largeImage} marginTop='10' />
+        {!isEmpty(project.largeImage) && <ImageDisplay src={project.largeImage} alt={project.largeImage} marginTop='10' />}
         <Divider marginTop="5" />
         <Box as="div" color={textColor}>
           <MDXRemote components={MDXComponents} {...project.mdxSource} />

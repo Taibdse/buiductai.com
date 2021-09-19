@@ -20,6 +20,7 @@ import useCustomTheme from '@/src/hooks/useCustomTheme';
 import { ROOT_WEB } from '@/src/constants/app';
 import { CONTENT_TYPE } from '@/src/constants/enum';
 import ImageDisplay from '@/src/components/ImageDisplay';
+import { isEmpty } from '@/src/utils/validation';
 
 const BlogPage = (props) => {
   const { blog, tags, slug } = props;
@@ -66,7 +67,7 @@ const BlogPage = (props) => {
           </Heading>
           <Badge mt="3">{blog.createdDate} - {blog.readingTime.text} - {blog.readingTime.words} words</Badge>
           <Tags tags={blogTags} marginTop="5" />
-          <ImageDisplay src={blog.coverImage} alt={blog.coverImage} marginTop='10' />
+          {!isEmpty(blog.largeImage) && <ImageDisplay src={blog.largeImage} alt={blog.largeImage} marginTop='10' />}
           <Divider marginTop="5" />
           <Box as="div" color={textColor}>
             <MDXRemote components={MDXComponents} {...blog.mdxSource} />
@@ -93,7 +94,6 @@ export async function getStaticProps(context) {
   const { params: { slug } } = context;
   const blog = await readPostBySlug(CONTENT_TYPE.BLOGS, slug);
   const tags = await readAllTags(CONTENT_TYPE.BLOGS);
-  console.log(blog);
   return {
     props: {
       blog,

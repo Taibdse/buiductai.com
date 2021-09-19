@@ -1,0 +1,80 @@
+---
+title: "How to add Google Analytics to Nextjs app"
+createdDate: "2021-18-09"
+excerpt: "Google Analytics is an amazing tool to track the traffic of users visit your website. I will share my experience when added Google Analytics code to nextjs app."
+thumbnailImage: ""
+largeImage: ""
+tags: ["reactjs", "nextjs", "javascript", "google-analytics"]
+author:
+  name: Duc-Tai Bui
+  avatar: https://res.cloudinary.com/ductai/image/upload/v1629090075/buiductai.com/author/avatar_kddb1i.jpg
+---
+
+Hello everyone, it's me again. Several days ago, I added Google Analytics tracking code to this blog site. As you know, my blog site was built using NextJS (Static site generator).
+So it has a small difference when adding Tracking code compared to vanilla Javascript. I will show you how to add code now.
+
+Firstly, I create a component called GoogleTagScript with responsibility for rendering google script tags to DOM.
+
+### Implement GoogleTagScript component
+
+```js:GoogleTagScript.js
+import React from 'react';
+
+function GoogleTagScript(props) {
+  return (
+    <>
+      {process.env.NODE_ENV === 'production' && (
+        <>
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-207981628-1"></script>
+          <script dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-207981628-1');
+        ` }}
+          />
+        </>
+      )}
+    </>
+  )
+}
+
+export default GoogleTagScript;
+```
+
+I just want to render Google Analytics tracking code on DOM when my application on production, so i use **process.env.NODE_ENV** to check current environment.
+
+**process.env.NODE_ENV** can be 'development' or 'production'.
+
+### Create custom document
+
+```js:/pages/_document.js
+import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
+import GoogleTagScript from 'somewhere/GoogleTagScript';
+
+export default class MyDocument extends NextDocument {
+  render() {
+    return (
+      <Html lang="en">
+        <Head>
+          <GoogleTagScript />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
+  }
+}
+```
+
+Because the tracking code of google appear in every pages in application, so i import GoogleTagScript component in document.
+
+### Conclusion & self-promotion
+
+I hope this way of integrating Google Analytics tracking code to NextJS will help you a lot.
+
+**Thanks for your reading.**

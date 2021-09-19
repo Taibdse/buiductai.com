@@ -121,9 +121,6 @@ const Hr = () => {
 
 
 const Pre = (props) => {
-  console.log('props');
-  console.log(props["data-title"])
-  console.log(props)
   const { children, ...rest } = props;
   const { copied, copy, ref } = useCopyToClipboard();
 
@@ -179,12 +176,12 @@ export const MDXComponents = {
   h5: (props) => <DocsHeading as="h5" size="sm" fontWeight="bold" {...props} />,
   h6: (props) => <DocsHeading as="h6" size="xs" fontWeight="bold" {...props} />,
   inlineCode: (props) => (
-    <Code colorScheme="yellow" fontSize="0.84em" {...props} />
+    <Code colorScheme="yellow" fontSize="1em" {...props} />
   ),
   br: (props) => <Box height="24px" {...props} />,
   hr: Hr,
   a: CustomLink,
-  p: (props) => <Text as="p" mt={0} lineHeight="tall" {...props} />,
+  p: (props) => <Text as="p" my={2} lineHeight="tall" {...props} />,
   ul: (props) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
   ol: (props) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
   li: (props) => <Box as="li" pb={1} {...props} />,

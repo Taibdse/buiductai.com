@@ -157,7 +157,8 @@ function Navbar() {
   const { textColor, primaryColor } = useCustomTheme();
 
   return (
-    <Box bg={bg} color={textColor}>
+    <Box bg={bg} color={textColor}
+      position="fixed" top="0" left="0" width="100%" zIndex="1000">
       <Flex
         minH={'60px'}
         py={{ base: 2 }}

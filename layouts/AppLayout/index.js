@@ -19,7 +19,7 @@ function AppLayout(props) {
       />
       {isShowPageScrollProgress && <PageScrollProgress />}
       <Navbar />
-      <Container maxW={'6xl'} paddingBottom="50px" minHeight="calc(100vh - 120px)">
+      <Container maxW={'6xl'} paddingBottom="50px" minHeight="calc(100vh - 120px)" marginTop="60px">
         {children}
       </Container>
       <Footer />

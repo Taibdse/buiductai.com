@@ -34,7 +34,7 @@ export default function BlogCard(props) {
       color={textColor}
       {...restProps}
     >
-      <Box
+      {/* <Box
         display="flex"
         flex="1"
         position="relative"
@@ -49,14 +49,14 @@ export default function BlogCard(props) {
             <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
               <ImageDisplay
                 borderRadius="lg"
-                src={blog.coverImage}
+                src={blog.thumbnailImage}
                 alt={blog.title}
                 objectFit="contain"
               />
             </Link>
           </NextLink>
         </Box>
-      </Box>
+      </Box> */}
       <Box
         display="flex"
         flex="2"

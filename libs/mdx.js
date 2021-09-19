@@ -79,6 +79,8 @@ export const readPostsByTag = async (type, tag) => {
     }
   }).filter(p => p.tags.map(t => t.toLowerCase()).indexOf(tag.toLowerCase()) > -1);
 
+  console.log(posts);
+
   return posts;
 }
 
