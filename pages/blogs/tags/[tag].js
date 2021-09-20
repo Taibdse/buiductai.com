@@ -14,7 +14,7 @@ function BlogByTagPage(props) {
 
   return (
     <AppLayout seo={seo}>
-      <BlogPageContainer tags={tags}>
+      <BlogPageContainer tags={tags} isBlogListContainer>
         <BlogList
           blogs={blogs}
           title={`Blogs of #${tag}`}

@@ -21,6 +21,7 @@ import { ROOT_WEB } from '@/src/constants/app';
 import { CONTENT_TYPE } from '@/src/constants/enum';
 import ImageDisplay from '@/src/components/ImageDisplay';
 import { isEmpty } from '@/src/utils/validation';
+import AuthorInfo from '@/src/components/AuthorInfo';
 
 const BlogPage = (props) => {
   const { blog, tags, slug } = props;
@@ -57,21 +58,22 @@ const BlogPage = (props) => {
     <AppLayout seo={getSeo()} isShowPageScrollProgress>
       <BlogPageContainer tags={tags}>
         <Box overflow="hidden" p={[1, 2, 3]}>
-          <NextLink href={ROUTE_PATHS.BLOGS_ROUTE}>
-            <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
-              Back
-            </Button>
-          </NextLink>
           <Heading as="h2" marginTop="5" color={textColor}>
             {blog.title}
           </Heading>
-          <Badge mt="3">{blog.createdDate} - {blog.readingTime.text} - {blog.readingTime.words} words</Badge>
+          <AuthorInfo author={blog.author} date={blog.createdDate} />
+          <Badge mt="3">{blog.readingTime.text} - {blog.readingTime.words} words</Badge>
           <Tags tags={blogTags} marginTop="5" />
           {!isEmpty(blog.largeImage) && <ImageDisplay src={blog.largeImage} alt={blog.largeImage} marginTop='10' />}
           <Divider marginTop="5" />
           <Box as="div" color={textColor}>
             <MDXRemote components={MDXComponents} {...blog.mdxSource} />
           </Box>
+          <NextLink href={ROUTE_PATHS.BLOGS_ROUTE}>
+            <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
+              Back
+            </Button>
+          </NextLink>
         </Box>
       </BlogPageContainer>
     </AppLayout>

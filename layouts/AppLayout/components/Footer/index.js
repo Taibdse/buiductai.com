@@ -8,7 +8,7 @@ import {
   useColorModeValue,
   VisuallyHidden,
 } from '@chakra-ui/react';
-import { FaFacebook, FaGithub, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaFacebook, FaGithub, FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa';
 
 import useCustomTheme from '@/src/hooks/useCustomTheme';
 import { SITE_NAME } from '@/src/constants/app';
@@ -49,6 +49,7 @@ const socialSites = [
   { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=100006632731348', icon: <FaFacebook /> },
   { label: 'Instagram', href: 'https://www.instagram.com/bductai/', icon: <FaInstagram /> },
   { label: 'Github', href: 'https://github.com/taibdse', icon: <FaGithub /> },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/tai-bui-7b52a8144', icon: <FaLinkedin /> },
 ]
 
 function Footer() {

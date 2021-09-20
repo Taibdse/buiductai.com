@@ -17,13 +17,13 @@ const BlogPage = (props) => {
 
   return (
     <AppLayout seo={seo}>
-      <BlogPageContainer tags={tags}>
+      <BlogPageContainer tags={tags} isBlogListContainer>
         <BlogList
           blogs={blogs}
           title="Blogs"
         />
       </BlogPageContainer>
-    </AppLayout >
+    </AppLayout>
   );
 };
 
