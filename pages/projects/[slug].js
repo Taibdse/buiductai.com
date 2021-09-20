@@ -22,6 +22,7 @@ import { ROOT_WEB } from '@/src/constants/app';
 import { CONTENT_TYPE } from '@/src/constants/enum';
 import { isEmpty } from '@/src/utils/validation';
 import ImageDisplay from '@/src/components/ImageDisplay';
+import AuthorInfo from '@/src/components/AuthorInfo';
 
 const ProjectDetailsPage = (props) => {
   const { project, slug } = props;
@@ -54,15 +55,11 @@ const ProjectDetailsPage = (props) => {
   return (
     <AppLayout seo={getSeo()} isShowPageScrollProgress>
       <Box overflow="hidden" p={0} maxWidth="3xl" margin="auto">
-        <NextLink href={ROUTE_PATHS.PROJECTS_ROUTE}>
-          <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
-            Back
-          </Button>
-        </NextLink>
         <Heading as="h2" marginTop="5" color={textColor}>
           {project.title}
         </Heading>
-        <Badge mt="2">{project.createdDate}</Badge>
+        <AuthorInfo author={project.author} date={project.createdDate} />
+        {/* <Badge mt="2">{project.createdDate}</Badge> */}
         <Link href={project.url} color={primaryColor} isExternal display="block" my="3">View website</Link>
         <Tags tags={projectTags} isLinkHidden marginTop="5" />
         {!isEmpty(project.largeImage) && <ImageDisplay src={project.largeImage} alt={project.largeImage} marginTop='10' />}
@@ -70,6 +67,11 @@ const ProjectDetailsPage = (props) => {
         <Box as="div" color={textColor}>
           <MDXRemote components={MDXComponents} {...project.mdxSource} />
         </Box>
+        <NextLink href={ROUTE_PATHS.PROJECTS_ROUTE}>
+          <Button leftIcon={<ArrowBackIcon />} marginBottom="5" marginTop="5" color={textColor}>
+            Back
+          </Button>
+        </NextLink>
       </Box>
     </AppLayout>
   );

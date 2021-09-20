@@ -7,6 +7,7 @@ export default class MyDocument extends NextDocument {
       <Html lang="en">
         <Head>
           <GoogleTagScript />
+          <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
           <Main />
